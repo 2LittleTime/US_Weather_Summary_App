@@ -1,0 +1,371 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="QclcdModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="QclcdModelStoreContainer">
+          <EntitySet Name="DailySummary" EntityType="QclcdModel.Store.DailySummary" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="DateReference" EntityType="QclcdModel.Store.DateReference" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Station" EntityType="QclcdModel.Store.Station" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_DailySummary_Station" Association="QclcdModel.Store.FK_DailySummary_Station">
+            <End Role="Station" EntitySet="Station" />
+            <End Role="DailySummary" EntitySet="DailySummary" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="DailySummary">
+          <Key>
+            <PropertyRef Name="WbanId" />
+            <PropertyRef Name="YearMonthDayId" />
+          </Key>
+          <Property Name="WbanId" Type="nvarchar" Nullable="false" MaxLength="10" />
+          <Property Name="YearMonthDayId" Type="date" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="Month" Type="int" Nullable="false" />
+          <Property Name="Day" Type="int" Nullable="false" />
+          <Property Name="TempMax" Type="numeric" Precision="3" />
+          <Property Name="TempMin" Type="numeric" Precision="3" />
+          <Property Name="TempAvg" Type="numeric" Precision="3" />
+          <Property Name="Water1" Type="numeric" Precision="3" />
+          <Property Name="SnowFall" Type="numeric" Precision="6" Scale="3" />
+          <Property Name="PrecipTotal" Type="numeric" Precision="6" Scale="3" />
+          <Property Name="WindAvgSpeed" Type="numeric" Precision="5" Scale="2" />
+          <Property Name="WindMax5Speed" Type="numeric" Precision="5" Scale="2" />
+          <Property Name="WindMax2Speed" Type="numeric" Precision="5" Scale="2" />
+        </EntityType>
+        <EntityType Name="DateReference">
+          <Key>
+            <PropertyRef Name="DateId" />
+          </Key>
+          <Property Name="DateId" Type="int" Nullable="false" />
+          <Property Name="FullDate" Type="date" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="Month" Type="int" Nullable="false" />
+          <Property Name="Day" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Station">
+          <Key>
+            <PropertyRef Name="WbanId" />
+          </Key>
+          <Property Name="WbanId" Type="nvarchar" Nullable="false" MaxLength="10" />
+          <Property Name="WMO" Type="nvarchar" MaxLength="10" />
+          <Property Name="CallSign" Type="nvarchar" MaxLength="10" />
+          <Property Name="ClimateDivisionCode" Type="nvarchar" MaxLength="5" />
+          <Property Name="ClimateDivisionStateCode" Type="nvarchar" MaxLength="5" />
+          <Property Name="ClimateDivisionStationCode" Type="nvarchar" MaxLength="5" />
+          <Property Name="StationName" Type="nvarchar" MaxLength="60" />
+          <Property Name="StationState" Type="nvarchar" MaxLength="5" />
+          <Property Name="Location" Type="nvarchar" MaxLength="50" />
+          <Property Name="Latitude" Type="numeric" Scale="6" />
+          <Property Name="Longitude" Type="numeric" Scale="6" />
+          <Property Name="GroundHeight" Type="numeric" Precision="6" />
+          <Property Name="StationHeight" Type="numeric" Precision="6" />
+          <Property Name="Barometer" Type="numeric" Precision="5" />
+          <Property Name="TimeZone" Type="numeric" Precision="2" />
+          <Property Name="PrimarySite" Type="nvarchar" MaxLength="1" />
+          <Property Name="SiteHasData" Type="nvarchar" MaxLength="1" />
+        </EntityType>
+        <Association Name="FK_DailySummary_Station">
+          <End Role="Station" Type="QclcdModel.Store.Station" Multiplicity="1" />
+          <End Role="DailySummary" Type="QclcdModel.Store.DailySummary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Station">
+              <PropertyRef Name="WbanId" />
+            </Principal>
+            <Dependent Role="DailySummary">
+              <PropertyRef Name="WbanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="usp_AvgWindSummary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="wBan" Type="nvarchar" Mode="In" />
+          <Parameter Name="beginMonth" Type="int" Mode="In" />
+          <Parameter Name="beginDay" Type="int" Mode="In" />
+          <Parameter Name="beginYear" Type="int" Mode="In" />
+          <Parameter Name="endMonth" Type="int" Mode="In" />
+          <Parameter Name="endDay" Type="int" Mode="In" />
+          <Parameter Name="endYear" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_PrecipSummary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="wBan" Type="nvarchar" Mode="In" />
+          <Parameter Name="beginMonth" Type="int" Mode="In" />
+          <Parameter Name="beginDay" Type="int" Mode="In" />
+          <Parameter Name="beginYear" Type="int" Mode="In" />
+          <Parameter Name="endMonth" Type="int" Mode="In" />
+          <Parameter Name="endDay" Type="int" Mode="In" />
+          <Parameter Name="endYear" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_StatesWithData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usp_StationNamesWithData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="stationState" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="usp_TempSummary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="wBan" Type="nvarchar" Mode="In" />
+          <Parameter Name="beginMonth" Type="int" Mode="In" />
+          <Parameter Name="beginDay" Type="int" Mode="In" />
+          <Parameter Name="beginYear" Type="int" Mode="In" />
+          <Parameter Name="endMonth" Type="int" Mode="In" />
+          <Parameter Name="endDay" Type="int" Mode="In" />
+          <Parameter Name="endYear" Type="int" Mode="In" />
+        </Function>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="QclcdModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="QclcdEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="DailySummaries" EntityType="QclcdModel.DailySummary" />
+          <EntitySet Name="DateReferences" EntityType="QclcdModel.DateReference" />
+          <EntitySet Name="Stations" EntityType="QclcdModel.Station" />
+          <AssociationSet Name="FK_DailySummary_Station" Association="QclcdModel.FK_DailySummary_Station">
+            <End Role="Station" EntitySet="Stations" />
+            <End Role="DailySummary" EntitySet="DailySummaries" />
+          </AssociationSet>
+          <FunctionImport Name="usp_AvgWindSummary" ReturnType="Collection(QclcdModel.usp_AvgWindSummary_Result)">
+            <Parameter Name="wBan" Mode="In" Type="String" />
+            <Parameter Name="beginMonth" Mode="In" Type="Int32" />
+            <Parameter Name="beginDay" Mode="In" Type="Int32" />
+            <Parameter Name="beginYear" Mode="In" Type="Int32" />
+            <Parameter Name="endMonth" Mode="In" Type="Int32" />
+            <Parameter Name="endDay" Mode="In" Type="Int32" />
+            <Parameter Name="endYear" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_PrecipSummary" ReturnType="Collection(QclcdModel.usp_PrecipSummary_Result)">
+            <Parameter Name="wBan" Mode="In" Type="String" />
+            <Parameter Name="beginMonth" Mode="In" Type="Int32" />
+            <Parameter Name="beginDay" Mode="In" Type="Int32" />
+            <Parameter Name="beginYear" Mode="In" Type="Int32" />
+            <Parameter Name="endMonth" Mode="In" Type="Int32" />
+            <Parameter Name="endDay" Mode="In" Type="Int32" />
+            <Parameter Name="endYear" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_TempSummary" ReturnType="Collection(QclcdModel.usp_TempSummary_Result)">
+            <Parameter Name="wBan" Mode="In" Type="String" />
+            <Parameter Name="beginMonth" Mode="In" Type="Int32" />
+            <Parameter Name="beginDay" Mode="In" Type="Int32" />
+            <Parameter Name="beginYear" Mode="In" Type="Int32" />
+            <Parameter Name="endMonth" Mode="In" Type="Int32" />
+            <Parameter Name="endDay" Mode="In" Type="Int32" />
+            <Parameter Name="endYear" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_StatesWithData" ReturnType="Collection(String)" />
+          <FunctionImport Name="usp_StationNamesWithData" ReturnType="Collection(QclcdModel.usp_StationNamesWithData_Result)">
+          <Parameter Name="stationState" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="DailySummary">
+          <Key>
+            <PropertyRef Name="WbanId" />
+            <PropertyRef Name="YearMonthDayId" />
+          </Key>
+          <Property Name="WbanId" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="YearMonthDayId" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="Month" Type="Int32" Nullable="false" />
+          <Property Name="Day" Type="Int32" Nullable="false" />
+          <Property Name="TempMax" Type="Decimal" Precision="3" Scale="0" />
+          <Property Name="TempMin" Type="Decimal" Precision="3" Scale="0" />
+          <Property Name="TempAvg" Type="Decimal" Precision="3" Scale="0" />
+          <Property Name="Water1" Type="Decimal" Precision="3" Scale="0" />
+          <Property Name="SnowFall" Type="Decimal" Precision="6" Scale="3" />
+          <Property Name="PrecipTotal" Type="Decimal" Precision="6" Scale="3" />
+          <Property Name="WindAvgSpeed" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="WindMax5Speed" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="WindMax2Speed" Type="Decimal" Precision="5" Scale="2" />
+          <NavigationProperty Name="Station" Relationship="QclcdModel.FK_DailySummary_Station" FromRole="DailySummary" ToRole="Station" />
+        </EntityType>
+        <EntityType Name="DateReference">
+          <Key>
+            <PropertyRef Name="DateId" />
+          </Key>
+          <Property Name="DateId" Type="Int32" Nullable="false" />
+          <Property Name="FullDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="Month" Type="Int32" Nullable="false" />
+          <Property Name="Day" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Station">
+          <Key>
+            <PropertyRef Name="WbanId" />
+          </Key>
+          <Property Name="WbanId" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="WMO" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="CallSign" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="ClimateDivisionCode" Type="String" MaxLength="5" Unicode="true" FixedLength="false" />
+          <Property Name="ClimateDivisionStateCode" Type="String" MaxLength="5" Unicode="true" FixedLength="false" />
+          <Property Name="ClimateDivisionStationCode" Type="String" MaxLength="5" Unicode="true" FixedLength="false" />
+          <Property Name="StationName" Type="String" MaxLength="60" Unicode="true" FixedLength="false" />
+          <Property Name="StationState" Type="String" MaxLength="5" Unicode="true" FixedLength="false" />
+          <Property Name="Location" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Latitude" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="Longitude" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="GroundHeight" Type="Decimal" Precision="6" Scale="0" />
+          <Property Name="StationHeight" Type="Decimal" Precision="6" Scale="0" />
+          <Property Name="Barometer" Type="Decimal" Precision="5" Scale="0" />
+          <Property Name="TimeZone" Type="Decimal" Precision="2" Scale="0" />
+          <Property Name="PrimarySite" Type="String" MaxLength="1" Unicode="true" FixedLength="false" />
+          <Property Name="SiteHasData" Type="String" MaxLength="1" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="DailySummaries" Relationship="QclcdModel.FK_DailySummary_Station" FromRole="Station" ToRole="DailySummary" />
+        </EntityType>
+        <Association Name="FK_DailySummary_Station">
+          <End Role="Station" Type="QclcdModel.Station" Multiplicity="1" />
+          <End Role="DailySummary" Type="QclcdModel.DailySummary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Station">
+              <PropertyRef Name="WbanId" />
+            </Principal>
+            <Dependent Role="DailySummary">
+              <PropertyRef Name="WbanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="usp_AvgWindSummary_Result">
+          <Property Type="Int32" Name="DateId" Nullable="true" />
+          <Property Type="Int32" Name="Month" Nullable="true" />
+          <Property Type="Int32" Name="Day" Nullable="true" />
+          <Property Type="Decimal" Name="WindAvg" Nullable="true" Precision="6" Scale="3" />
+        </ComplexType>
+        <ComplexType Name="usp_PrecipSummary_Result">
+          <Property Type="Int32" Name="DateId" Nullable="true" />
+          <Property Type="Int32" Name="Month" Nullable="true" />
+          <Property Type="Int32" Name="Day" Nullable="true" />
+          <Property Type="Decimal" Name="PrecipAvg" Nullable="true" Precision="6" Scale="3" />
+        </ComplexType>
+        <ComplexType Name="usp_TempSummary_Result">
+          <Property Type="Int32" Name="DateId" Nullable="true" />
+          <Property Type="Int32" Name="Month" Nullable="true" />
+          <Property Type="Int32" Name="Day" Nullable="true" />
+          <Property Type="Int32" Name="AvgTempMax" Nullable="true" />
+          <Property Type="Int32" Name="AvgTempAvg" Nullable="true" />
+          <Property Type="Int32" Name="AvgTempMin" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="usp_StationNamesWithData_Result">
+          <Property Type="String" Name="WbanId" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="StationName" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="Location" Nullable="true" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="QclcdModelStoreContainer" CdmEntityContainer="QclcdEntities">
+          <EntitySetMapping Name="DailySummaries">
+            <EntityTypeMapping TypeName="QclcdModel.DailySummary">
+              <MappingFragment StoreEntitySet="DailySummary">
+                <ScalarProperty Name="WbanId" ColumnName="WbanId" />
+                <ScalarProperty Name="YearMonthDayId" ColumnName="YearMonthDayId" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="TempMax" ColumnName="TempMax" />
+                <ScalarProperty Name="TempMin" ColumnName="TempMin" />
+                <ScalarProperty Name="TempAvg" ColumnName="TempAvg" />
+                <ScalarProperty Name="Water1" ColumnName="Water1" />
+                <ScalarProperty Name="SnowFall" ColumnName="SnowFall" />
+                <ScalarProperty Name="PrecipTotal" ColumnName="PrecipTotal" />
+                <ScalarProperty Name="WindAvgSpeed" ColumnName="WindAvgSpeed" />
+                <ScalarProperty Name="WindMax5Speed" ColumnName="WindMax5Speed" />
+                <ScalarProperty Name="WindMax2Speed" ColumnName="WindMax2Speed" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DateReferences">
+            <EntityTypeMapping TypeName="QclcdModel.DateReference">
+              <MappingFragment StoreEntitySet="DateReference">
+                <ScalarProperty Name="DateId" ColumnName="DateId" />
+                <ScalarProperty Name="FullDate" ColumnName="FullDate" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stations">
+            <EntityTypeMapping TypeName="QclcdModel.Station">
+              <MappingFragment StoreEntitySet="Station">
+                <ScalarProperty Name="WbanId" ColumnName="WbanId" />
+                <ScalarProperty Name="WMO" ColumnName="WMO" />
+                <ScalarProperty Name="CallSign" ColumnName="CallSign" />
+                <ScalarProperty Name="ClimateDivisionCode" ColumnName="ClimateDivisionCode" />
+                <ScalarProperty Name="ClimateDivisionStateCode" ColumnName="ClimateDivisionStateCode" />
+                <ScalarProperty Name="ClimateDivisionStationCode" ColumnName="ClimateDivisionStationCode" />
+                <ScalarProperty Name="StationName" ColumnName="StationName" />
+                <ScalarProperty Name="StationState" ColumnName="StationState" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="GroundHeight" ColumnName="GroundHeight" />
+                <ScalarProperty Name="StationHeight" ColumnName="StationHeight" />
+                <ScalarProperty Name="Barometer" ColumnName="Barometer" />
+                <ScalarProperty Name="TimeZone" ColumnName="TimeZone" />
+                <ScalarProperty Name="PrimarySite" ColumnName="PrimarySite" />
+                <ScalarProperty Name="SiteHasData" ColumnName="SiteHasData" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="usp_AvgWindSummary" FunctionName="QclcdModel.Store.usp_AvgWindSummary">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QclcdModel.usp_AvgWindSummary_Result">
+                <ScalarProperty Name="DateId" ColumnName="DateId" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="WindAvg" ColumnName="WindAvg" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_PrecipSummary" FunctionName="QclcdModel.Store.usp_PrecipSummary">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QclcdModel.usp_PrecipSummary_Result">
+                <ScalarProperty Name="DateId" ColumnName="DateId" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="PrecipAvg" ColumnName="PrecipAvg" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_TempSummary" FunctionName="QclcdModel.Store.usp_TempSummary">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QclcdModel.usp_TempSummary_Result">
+                <ScalarProperty Name="DateId" ColumnName="DateId" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="AvgTempMax" ColumnName="AvgTempMax" />
+                <ScalarProperty Name="AvgTempAvg" ColumnName="AvgTempAvg" />
+                <ScalarProperty Name="AvgTempMin" ColumnName="AvgTempMin" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_StatesWithData" FunctionName="QclcdModel.Store.usp_StatesWithData" />
+          <FunctionImportMapping FunctionImportName="usp_StationNamesWithData" FunctionName="QclcdModel.Store.usp_StationNamesWithData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QclcdModel.usp_StationNamesWithData_Result">
+                <ScalarProperty Name="WbanId" ColumnName="WbanId" />
+                <ScalarProperty Name="StationName" ColumnName="StationName" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

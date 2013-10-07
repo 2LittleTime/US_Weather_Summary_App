@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="DefaultConnection-Web.config Connection String" description="DefaultConnection Connection String used in web.config by the application to access the database." defaultValue="Data Source=(LocalDb)\v11.0;Initial Catalog=aspnet-TemplateFull-20130828145253;Integrated Security=SSPI;AttachDBFilename=|DataDirectory|\aspnet-TemplateFull-20130828145253.mdf" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\QCLCD\\App_Snippets\\Templates\\MyTemplateFull_Azure\\TemplateFull\\TemplateFull\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+  <parameter name="QclcdContext-Web.config Connection String" description="QclcdContext Connection String used in web.config by the application to access the database." defaultValue="metadata=res://*/QclcdModels.csdl|res://*/QclcdModels.ssdl|res://*/QclcdModels.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=VM_W8_DEV;initial catalog=QCLCD;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\QCLCD\\App_Snippets\\Templates\\MyTemplateFull_Azure\\TemplateFull\\TemplateFull\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='QclcdContext']/@connectionString" />
+  </parameter>
+  <parameter name="QclcdEntities-Web.config Connection String" description="QclcdEntities Connection String used in web.config by the application to access the database." defaultValue="metadata=res://*/Models.QclcdModels.csdl|res://*/Models.QclcdModels.ssdl|res://*/Models.QclcdModels.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=VM_W8_DEV;initial catalog=QCLCD;integrated security=True;multipleactiveresultsets=True;application name=EntityFramework&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\QCLCD\\App_Snippets\\Templates\\MyTemplateFull_Azure\\TemplateFull\\TemplateFull\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='QclcdEntities']/@connectionString" />
+  </parameter>
+</parameters>

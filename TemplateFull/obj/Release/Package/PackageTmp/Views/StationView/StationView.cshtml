@@ -1,0 +1,92 @@
+﻿@model StationView
+@using PagedList.Mvc;
+@using TemplateFull.Models.ViewModels;
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = "Stations";
+}
+
+<div id="content"> <a id="maincontent"></a>
+
+@using (Html.BeginForm("Index", "StationView", FormMethod.Get))
+{
+    <p>
+        Filter By State:
+        @Html.DropDownList("StationState", Model.StationStates, "---Select State---")
+        @*Filter By State: @Html.DropDownList("StateSelect", ViewBag.StateSelect as SelectList, "---Select State---")*@
+        @*State Drop Down List: @Html.ListBox("StateSelect", ViewBag.StateSelect as MultiSelectList, "-- Select One--")*@
+        <input type="submit" value="Search" />
+        <button onclick="location.href='@Url.Action("Index", "StationView")'; return false;">Clear Filters</button>
+    </p>
+}
+
+
+
+ <table class="table" border="1" cellspacing="0">
+    <thead>
+        
+        <tr>
+            <th>
+                @Html.ActionLink("WBAN", "Index", new { sortOrder = ViewBag.WbanSortParam, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                Call Sign
+            </th>
+            <th>
+                @Html.ActionLink("Station Name", "Index", new { sortorder = ViewBag.StationNameSortParam, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("State", "Index", new { sortorder = ViewBag.StateSortParam, currentFilter = ViewBag.CurrentFilter })
+            <th>
+                Location
+            </th>
+            <th>
+                Primary Site
+            </th>
+            <th>
+                Site Has Data
+            </th>
+            <th>See Details</th>
+        </tr>
+        
+    </thead>
+@foreach (var item in Model.StationPageList.Select((value, i) => new {Data = value, Index = i})) {
+    
+          
+    <tr class="@(item.Index % 2 == 0 ? "table-row-1" : "table-row-2")">
+        <td>
+            @Html.DisplayFor(modelItem => item.Data.WbanId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data.CallSign)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data.StationName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data.StationState)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data.Location)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data.PrimarySite)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data.SiteHasData)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id=item.Data.WbanId })
+        </td>
+    </tr>
+}
+
+</table>
+
+<br />
+
+Page @(Model.StationPageList.PageCount < Model.StationPageList.PageNumber ? 0 : Model.StationPageList.PageNumber) of @Model.StationPageList.PageCount
+@Html.PagedListPager(Model.StationPageList, page => Url.Action("Index", new {page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }) )
+
+</div>

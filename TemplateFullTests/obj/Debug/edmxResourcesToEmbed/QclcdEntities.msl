@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="QCLCDModelStoreContainer" CdmEntityContainer="QclcdEntities">
+    <EntitySetMapping Name="DailySummaries">
+      <EntityTypeMapping TypeName="QCLCDModel.DailySummary">
+        <MappingFragment StoreEntitySet="DailySummary">
+          <ScalarProperty Name="WbanId" ColumnName="WbanId" />
+          <ScalarProperty Name="YearMonthDayId" ColumnName="YearMonthDayId" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="Day" ColumnName="Day" />
+          <ScalarProperty Name="TempMax" ColumnName="TempMax" />
+          <ScalarProperty Name="TempMin" ColumnName="TempMin" />
+          <ScalarProperty Name="TempAvg" ColumnName="TempAvg" />
+          <ScalarProperty Name="Water1" ColumnName="Water1" />
+          <ScalarProperty Name="SnowFall" ColumnName="SnowFall" />
+          <ScalarProperty Name="PrecipTotal" ColumnName="PrecipTotal" />
+          <ScalarProperty Name="WindAvgSpeed" ColumnName="WindAvgSpeed" />
+          <ScalarProperty Name="WindMax5Speed" ColumnName="WindMax5Speed" />
+          <ScalarProperty Name="WindMax2Speed" ColumnName="WindMax2Speed" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DateReferences">
+      <EntityTypeMapping TypeName="QCLCDModel.DateReference">
+        <MappingFragment StoreEntitySet="DateReference">
+          <ScalarProperty Name="DateId" ColumnName="DateId" />
+          <ScalarProperty Name="FullDate" ColumnName="FullDate" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="Day" ColumnName="Day" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Stations">
+      <EntityTypeMapping TypeName="QCLCDModel.Station">
+        <MappingFragment StoreEntitySet="Station">
+          <ScalarProperty Name="WbanId" ColumnName="WbanId" />
+          <ScalarProperty Name="WMO" ColumnName="WMO" />
+          <ScalarProperty Name="CallSign" ColumnName="CallSign" />
+          <ScalarProperty Name="ClimateDivisionCode" ColumnName="ClimateDivisionCode" />
+          <ScalarProperty Name="ClimateDivisionStateCode" ColumnName="ClimateDivisionStateCode" />
+          <ScalarProperty Name="ClimateDivisionStationCode" ColumnName="ClimateDivisionStationCode" />
+          <ScalarProperty Name="StationName" ColumnName="StationName" />
+          <ScalarProperty Name="StationState" ColumnName="StationState" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="GroundHeight" ColumnName="GroundHeight" />
+          <ScalarProperty Name="StationHeight" ColumnName="StationHeight" />
+          <ScalarProperty Name="Barometer" ColumnName="Barometer" />
+          <ScalarProperty Name="TimeZone" ColumnName="TimeZone" />
+          <ScalarProperty Name="PrimarySite" ColumnName="PrimarySite" />
+          <ScalarProperty Name="SiteHasData" ColumnName="SiteHasData" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="QCLCDModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="uvw_DailySummaryUniqueWbans">
+      <EntityTypeMapping TypeName="QCLCDModel.uvw_DailySummaryUniqueWbans">
+        <MappingFragment StoreEntitySet="uvw_DailySummaryUniqueWbans">
+          <ScalarProperty Name="WbanId" ColumnName="WbanId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="uvw_DailySummaryWbansNotInStation">
+      <EntityTypeMapping TypeName="QCLCDModel.uvw_DailySummaryWbansNotInStation">
+        <MappingFragment StoreEntitySet="uvw_DailySummaryWbansNotInStation">
+          <ScalarProperty Name="WbanId" ColumnName="WbanId" />
+          <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="uvw_StationUniqueWbans">
+      <EntityTypeMapping TypeName="QCLCDModel.uvw_StationUniqueWbans">
+        <MappingFragment StoreEntitySet="uvw_StationUniqueWbans">
+          <ScalarProperty Name="WbanId" ColumnName="WbanId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="BuildDateReferenceTable" FunctionName="QCLCDModel.Store.BuildDateReferenceTable" />
+    <FunctionImportMapping FunctionImportName="GetJSON" FunctionName="QCLCDModel.Store.GetJSON" />
+    <FunctionImportMapping FunctionImportName="JulyTemps" FunctionName="QCLCDModel.Store.JulyTemps" />
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="QCLCDModel.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="QCLCDModel.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="QCLCDModel.Store.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="QCLCDModel.Store.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="QCLCDModel.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="QCLCDModel.Store.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="QCLCDModel.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="QCLCDModel.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="QCLCDModel.Store.sp_upgraddiagrams" />
+    <FunctionImportMapping FunctionImportName="usp_AvgWindSummary" FunctionName="QCLCDModel.Store.usp_AvgWindSummary">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="QCLCDModel.usp_AvgWindSummary_Result">
+          <ScalarProperty Name="DateId" ColumnName="DateId" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="Day" ColumnName="Day" />
+          <ScalarProperty Name="WindAvg" ColumnName="WindAvg" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="usp_AvgWindSummaryJson" FunctionName="QCLCDModel.Store.usp_AvgWindSummaryJson">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="QCLCDModel.usp_AvgWindSummaryJson_Result">
+          <ScalarProperty Name="DateId" ColumnName="DateId" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="Day" ColumnName="Day" />
+          <ScalarProperty Name="WindAvg" ColumnName="WindAvg" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="usp_DeleteDailySummaryRowsNoWban" FunctionName="QCLCDModel.Store.usp_DeleteDailySummaryRowsNoWban" />
+    <FunctionImportMapping FunctionImportName="usp_PrecipSummary" FunctionName="QCLCDModel.Store.usp_PrecipSummary">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="QCLCDModel.usp_PrecipSummary_Result">
+          <ScalarProperty Name="DateId" ColumnName="DateId" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="Day" ColumnName="Day" />
+          <ScalarProperty Name="PrecipAvg" ColumnName="PrecipAvg" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="usp_StatesWithData" FunctionName="QCLCDModel.Store.usp_StatesWithData" />
+    <FunctionImportMapping FunctionImportName="usp_StationNamesWithData" FunctionName="QCLCDModel.Store.usp_StationNamesWithData">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="QCLCDModel.usp_StationNamesWithData_Result">
+          <ScalarProperty Name="WbanId" ColumnName="WbanId" />
+          <ScalarProperty Name="StationName" ColumnName="StationName" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="StationState" ColumnName="StationState" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="usp_TempSummary" FunctionName="QCLCDModel.Store.usp_TempSummary">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="QCLCDModel.usp_TempSummary_Result">
+          <ScalarProperty Name="DateId" ColumnName="DateId" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="Day" ColumnName="Day" />
+          <ScalarProperty Name="AvgTempMax" ColumnName="AvgTempMax" />
+          <ScalarProperty Name="AvgTempAvg" ColumnName="AvgTempAvg" />
+          <ScalarProperty Name="AvgTempMin" ColumnName="AvgTempMin" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

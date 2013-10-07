@@ -1,0 +1,179 @@
+﻿@model TemplateFull.Models.Station
+
+@{
+    ViewBag.Title = "Station Details";
+}
+
+
+<div id="content"> <a id="maincontent"></a>
+
+<br />
+<br />
+
+<table class="table" border="1">
+    <thead >
+        <tr>
+            <th colspan="2">Station Details</th>
+        </tr>
+    </thead>
+    
+    <tr class="table-row-1">
+        <td>
+           @Html.DisplayNameFor(model => model.WbanId)
+        </td>
+        <td>
+           @Html.DisplayFor(model => model.WbanId)
+        </td>
+    </tr>
+
+    <tr class="table-row-2">
+        <td class="display-label">
+             @Html.DisplayNameFor(model => model.WMO)
+        </td>
+        <td class="display-field">
+            @Html.DisplayFor(model => model.WMO)
+        </td>
+    </tr>
+
+    <tr class="table-row-1">
+        <td class="display-label">
+             @Html.DisplayNameFor(model => model.CallSign)
+        </td>
+        <td class="display-field">
+            @Html.DisplayFor(model => model.CallSign)
+        </td>
+    </tr>
+
+    <tr class="table-row-2">
+        <td class="display-label">
+             @Html.DisplayNameFor(model => model.ClimateDivisionCode)
+        </td>
+        <td class="display-field">
+            @Html.DisplayFor(model => model.ClimateDivisionCode)
+        </td>
+    </tr>
+
+    <tr class="table-row-1">
+        <td class="display-label">
+             @Html.DisplayNameFor(model => model.ClimateDivisionStateCode)
+        </td>
+        <td class="display-field">
+            @Html.DisplayFor(model => model.ClimateDivisionStateCode)
+        </td>
+    </tr>
+
+    <tr class="table-row-2">
+        <td class="display-label">
+             @Html.DisplayNameFor(model => model.ClimateDivisionStationCode)
+        </td>
+        <td class="display-field">
+            @Html.DisplayFor(model => model.ClimateDivisionStationCode)
+        </td>
+    </tr>
+
+    <tr class="table-row-1">
+        <td class="display-label">
+             @Html.DisplayNameFor(model => model.StationName)
+        </td>
+        <td class="display-field">
+            @Html.DisplayFor(model => model.StationName)
+        </td>
+    </tr>
+
+    <tr class="table-row-2">
+        <td class="display-label">
+             @Html.DisplayNameFor(model => model.StationState)
+        </td>
+        <td class="display-field">
+            @Html.DisplayFor(model => model.StationState)
+        </td>
+    </tr>
+
+    <tr class="table-row-1">
+        <td class="display-label">
+             @Html.DisplayNameFor(model => model.Location)
+        </td>
+        <td class="display-field">
+            @Html.DisplayFor(model => model.Location)
+        </td>
+    </tr>
+
+    <tr class="table-row-2">
+        <td class="display-label">
+             @Html.DisplayNameFor(model => model.Latitude)
+        </td>
+        <td class="display-field">
+            @Html.DisplayFor(model => model.Latitude)
+        </td>
+    </tr>
+
+    <tr class="table-row-1">
+        <td class="display-label">
+             @Html.DisplayNameFor(model => model.Longitude)
+        </td>
+        <td class="display-field">
+            @Html.DisplayFor(model => model.Longitude)
+        </td>
+    </tr>
+
+    <tr class="table-row-2">
+        <td class="display-label">
+             @Html.DisplayNameFor(model => model.GroundHeight)
+        </td>
+        <td class="display-field">
+            @Html.DisplayFor(model => model.GroundHeight)
+        </td>
+    </tr>
+
+    <tr class="table-row-1">
+        <td class="display-label">
+             @Html.DisplayNameFor(model => model.StationHeight)
+        </td>
+        <td class="display-field">
+            @Html.DisplayFor(model => model.StationHeight)
+        </td>
+    </tr>
+
+    <tr class="table-row-2">
+        <td class="display-label">
+             @Html.DisplayNameFor(model => model.Barometer)
+        </td>
+        <td class="display-field">
+            @Html.DisplayFor(model => model.Barometer)
+        </td>
+    </tr>
+
+    <tr class="table-row-1">
+        <td class="display-label">
+             @Html.DisplayNameFor(model => model.TimeZone)
+        </td>
+        <td class="display-field">
+            @Html.DisplayFor(model => model.TimeZone)
+        </td>
+    </tr>
+
+    <tr class="table-row-2">
+        <td class="display-label">
+             @Html.DisplayNameFor(model => model.PrimarySite)
+        </td>
+        <td class="display-field">
+            @Html.DisplayFor(model => model.PrimarySite)
+        </td>
+    </tr>
+
+    <tr class="table-row-1">
+        <td class="display-label">
+             @Html.DisplayNameFor(model => model.SiteHasData)
+        </td>
+        <td class="display-field">
+            @Html.DisplayFor(model => model.SiteHasData)
+        </td>
+    </tr>
+
+</table>
+
+<p>
+    @Html.ActionLink("Back to Station List", "Index")
+</p>
+
+</div>

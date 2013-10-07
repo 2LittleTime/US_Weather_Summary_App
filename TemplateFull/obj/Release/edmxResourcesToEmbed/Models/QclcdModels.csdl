@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QclcdModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="QclcdEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="DailySummaries" EntityType="QclcdModel.DailySummary" />
+    <EntitySet Name="DateReferences" EntityType="QclcdModel.DateReference" />
+    <EntitySet Name="Stations" EntityType="QclcdModel.Station" />
+    <AssociationSet Name="FK_DailySummary_Station" Association="QclcdModel.FK_DailySummary_Station">
+      <End Role="Station" EntitySet="Stations" />
+      <End Role="DailySummary" EntitySet="DailySummaries" />
+    </AssociationSet>
+    <FunctionImport Name="usp_AvgWindSummary" ReturnType="Collection(QclcdModel.usp_AvgWindSummary_Result)">
+      <Parameter Name="wBan" Mode="In" Type="String" />
+      <Parameter Name="beginMonth" Mode="In" Type="Int32" />
+      <Parameter Name="beginDay" Mode="In" Type="Int32" />
+      <Parameter Name="beginYear" Mode="In" Type="Int32" />
+      <Parameter Name="endMonth" Mode="In" Type="Int32" />
+      <Parameter Name="endDay" Mode="In" Type="Int32" />
+      <Parameter Name="endYear" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="usp_PrecipSummary" ReturnType="Collection(QclcdModel.usp_PrecipSummary_Result)">
+      <Parameter Name="wBan" Mode="In" Type="String" />
+      <Parameter Name="beginMonth" Mode="In" Type="Int32" />
+      <Parameter Name="beginDay" Mode="In" Type="Int32" />
+      <Parameter Name="beginYear" Mode="In" Type="Int32" />
+      <Parameter Name="endMonth" Mode="In" Type="Int32" />
+      <Parameter Name="endDay" Mode="In" Type="Int32" />
+      <Parameter Name="endYear" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="usp_TempSummary" ReturnType="Collection(QclcdModel.usp_TempSummary_Result)">
+      <Parameter Name="wBan" Mode="In" Type="String" />
+      <Parameter Name="beginMonth" Mode="In" Type="Int32" />
+      <Parameter Name="beginDay" Mode="In" Type="Int32" />
+      <Parameter Name="beginYear" Mode="In" Type="Int32" />
+      <Parameter Name="endMonth" Mode="In" Type="Int32" />
+      <Parameter Name="endDay" Mode="In" Type="Int32" />
+      <Parameter Name="endYear" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="usp_StatesWithData" ReturnType="Collection(String)" />
+    <FunctionImport Name="usp_StationNamesWithData" ReturnType="Collection(QclcdModel.usp_StationNamesWithData_Result)">
+      <Parameter Name="stationState" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <EntityType Name="DailySummary">
+    <Key>
+      <PropertyRef Name="WbanId" />
+      <PropertyRef Name="YearMonthDayId" />
+    </Key>
+    <Property Name="WbanId" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="YearMonthDayId" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Year" Type="Int32" Nullable="false" />
+    <Property Name="Month" Type="Int32" Nullable="false" />
+    <Property Name="Day" Type="Int32" Nullable="false" />
+    <Property Name="TempMax" Type="Decimal" Precision="3" Scale="0" />
+    <Property Name="TempMin" Type="Decimal" Precision="3" Scale="0" />
+    <Property Name="TempAvg" Type="Decimal" Precision="3" Scale="0" />
+    <Property Name="Water1" Type="Decimal" Precision="3" Scale="0" />
+    <Property Name="SnowFall" Type="Decimal" Precision="6" Scale="3" />
+    <Property Name="PrecipTotal" Type="Decimal" Precision="6" Scale="3" />
+    <Property Name="WindAvgSpeed" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="WindMax5Speed" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="WindMax2Speed" Type="Decimal" Precision="5" Scale="2" />
+    <NavigationProperty Name="Station" Relationship="QclcdModel.FK_DailySummary_Station" FromRole="DailySummary" ToRole="Station" />
+  </EntityType>
+  <EntityType Name="DateReference">
+    <Key>
+      <PropertyRef Name="DateId" />
+    </Key>
+    <Property Name="DateId" Type="Int32" Nullable="false" />
+    <Property Name="FullDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Year" Type="Int32" Nullable="false" />
+    <Property Name="Month" Type="Int32" Nullable="false" />
+    <Property Name="Day" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Station">
+    <Key>
+      <PropertyRef Name="WbanId" />
+    </Key>
+    <Property Name="WbanId" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="WMO" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="CallSign" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="ClimateDivisionCode" Type="String" MaxLength="5" Unicode="true" FixedLength="false" />
+    <Property Name="ClimateDivisionStateCode" Type="String" MaxLength="5" Unicode="true" FixedLength="false" />
+    <Property Name="ClimateDivisionStationCode" Type="String" MaxLength="5" Unicode="true" FixedLength="false" />
+    <Property Name="StationName" Type="String" MaxLength="60" Unicode="true" FixedLength="false" />
+    <Property Name="StationState" Type="String" MaxLength="5" Unicode="true" FixedLength="false" />
+    <Property Name="Location" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Latitude" Type="Decimal" Precision="18" Scale="6" />
+    <Property Name="Longitude" Type="Decimal" Precision="18" Scale="6" />
+    <Property Name="GroundHeight" Type="Decimal" Precision="6" Scale="0" />
+    <Property Name="StationHeight" Type="Decimal" Precision="6" Scale="0" />
+    <Property Name="Barometer" Type="Decimal" Precision="5" Scale="0" />
+    <Property Name="TimeZone" Type="Decimal" Precision="2" Scale="0" />
+    <Property Name="PrimarySite" Type="String" MaxLength="1" Unicode="true" FixedLength="false" />
+    <Property Name="SiteHasData" Type="String" MaxLength="1" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="DailySummaries" Relationship="QclcdModel.FK_DailySummary_Station" FromRole="Station" ToRole="DailySummary" />
+  </EntityType>
+  <Association Name="FK_DailySummary_Station">
+    <End Role="Station" Type="QclcdModel.Station" Multiplicity="1" />
+    <End Role="DailySummary" Type="QclcdModel.DailySummary" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Station">
+        <PropertyRef Name="WbanId" />
+      </Principal>
+      <Dependent Role="DailySummary">
+        <PropertyRef Name="WbanId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="usp_AvgWindSummary_Result">
+    <Property Type="Int32" Name="DateId" Nullable="true" />
+    <Property Type="Int32" Name="Month" Nullable="true" />
+    <Property Type="Int32" Name="Day" Nullable="true" />
+    <Property Type="Decimal" Name="WindAvg" Nullable="true" Precision="6" Scale="3" />
+  </ComplexType>
+  <ComplexType Name="usp_PrecipSummary_Result">
+    <Property Type="Int32" Name="DateId" Nullable="true" />
+    <Property Type="Int32" Name="Month" Nullable="true" />
+    <Property Type="Int32" Name="Day" Nullable="true" />
+    <Property Type="Decimal" Name="PrecipAvg" Nullable="true" Precision="6" Scale="3" />
+  </ComplexType>
+  <ComplexType Name="usp_TempSummary_Result">
+    <Property Type="Int32" Name="DateId" Nullable="true" />
+    <Property Type="Int32" Name="Month" Nullable="true" />
+    <Property Type="Int32" Name="Day" Nullable="true" />
+    <Property Type="Int32" Name="AvgTempMax" Nullable="true" />
+    <Property Type="Int32" Name="AvgTempAvg" Nullable="true" />
+    <Property Type="Int32" Name="AvgTempMin" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="usp_StationNamesWithData_Result">
+    <Property Type="String" Name="WbanId" Nullable="false" MaxLength="10" />
+    <Property Type="String" Name="StationName" Nullable="true" MaxLength="60" />
+    <Property Type="String" Name="Location" Nullable="true" MaxLength="50" />
+  </ComplexType>
+</Schema>

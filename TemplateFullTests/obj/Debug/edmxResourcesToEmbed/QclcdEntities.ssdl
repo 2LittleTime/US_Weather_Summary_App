@@ -1,0 +1,241 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QCLCDModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="QCLCDModelStoreContainer">
+    <EntitySet Name="DailySummary" EntityType="QCLCDModel.Store.DailySummary" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DateReference" EntityType="QCLCDModel.Store.DateReference" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Station" EntityType="QCLCDModel.Store.Station" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="sysdiagrams" EntityType="QCLCDModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="uvw_DailySummaryUniqueWbans" EntityType="QCLCDModel.Store.uvw_DailySummaryUniqueWbans" store:Type="Views" store:Schema="dbo" store:Name="uvw_DailySummaryUniqueWbans">
+      <DefiningQuery>SELECT 
+      [uvw_DailySummaryUniqueWbans].[WbanId] AS [WbanId]
+      FROM [dbo].[uvw_DailySummaryUniqueWbans] AS [uvw_DailySummaryUniqueWbans]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="uvw_DailySummaryWbansNotInStation" EntityType="QCLCDModel.Store.uvw_DailySummaryWbansNotInStation" store:Type="Views" store:Schema="dbo" store:Name="uvw_DailySummaryWbansNotInStation">
+      <DefiningQuery>SELECT 
+      [uvw_DailySummaryWbansNotInStation].[WbanId] AS [WbanId], 
+      [uvw_DailySummaryWbansNotInStation].[Expr1] AS [Expr1]
+      FROM [dbo].[uvw_DailySummaryWbansNotInStation] AS [uvw_DailySummaryWbansNotInStation]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="uvw_StationUniqueWbans" EntityType="QCLCDModel.Store.uvw_StationUniqueWbans" store:Type="Views" store:Schema="dbo" store:Name="uvw_StationUniqueWbans">
+      <DefiningQuery>SELECT 
+      [uvw_StationUniqueWbans].[WbanId] AS [WbanId]
+      FROM [dbo].[uvw_StationUniqueWbans] AS [uvw_StationUniqueWbans]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_DailySummary_Station" Association="QCLCDModel.Store.FK_DailySummary_Station">
+      <End Role="Station" EntitySet="Station" />
+      <End Role="DailySummary" EntitySet="DailySummary" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="DailySummary">
+    <Key>
+      <PropertyRef Name="WbanId" />
+      <PropertyRef Name="YearMonthDayId" />
+    </Key>
+    <Property Name="WbanId" Type="nvarchar" Nullable="false" MaxLength="10" />
+    <Property Name="YearMonthDayId" Type="date" Nullable="false" />
+    <Property Name="Year" Type="int" Nullable="false" />
+    <Property Name="Month" Type="int" Nullable="false" />
+    <Property Name="Day" Type="int" Nullable="false" />
+    <Property Name="TempMax" Type="numeric" Precision="3" />
+    <Property Name="TempMin" Type="numeric" Precision="3" />
+    <Property Name="TempAvg" Type="numeric" Precision="3" />
+    <Property Name="Water1" Type="numeric" Precision="3" />
+    <Property Name="SnowFall" Type="numeric" Precision="6" Scale="3" />
+    <Property Name="PrecipTotal" Type="numeric" Precision="6" Scale="3" />
+    <Property Name="WindAvgSpeed" Type="numeric" Precision="5" Scale="2" />
+    <Property Name="WindMax5Speed" Type="numeric" Precision="5" Scale="2" />
+    <Property Name="WindMax2Speed" Type="numeric" Precision="5" Scale="2" />
+  </EntityType>
+  <EntityType Name="DateReference">
+    <Key>
+      <PropertyRef Name="DateId" />
+    </Key>
+    <Property Name="DateId" Type="int" Nullable="false" />
+    <Property Name="FullDate" Type="date" Nullable="false" />
+    <Property Name="Year" Type="int" Nullable="false" />
+    <Property Name="Month" Type="int" Nullable="false" />
+    <Property Name="Day" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Station">
+    <Key>
+      <PropertyRef Name="WbanId" />
+    </Key>
+    <Property Name="WbanId" Type="nvarchar" Nullable="false" MaxLength="10" />
+    <Property Name="WMO" Type="nvarchar" MaxLength="10" />
+    <Property Name="CallSign" Type="nvarchar" MaxLength="10" />
+    <Property Name="ClimateDivisionCode" Type="nvarchar" MaxLength="5" />
+    <Property Name="ClimateDivisionStateCode" Type="nvarchar" MaxLength="5" />
+    <Property Name="ClimateDivisionStationCode" Type="nvarchar" MaxLength="5" />
+    <Property Name="StationName" Type="nvarchar" MaxLength="60" />
+    <Property Name="StationState" Type="nvarchar" MaxLength="5" />
+    <Property Name="Location" Type="nvarchar" MaxLength="50" />
+    <Property Name="Latitude" Type="numeric" Scale="6" />
+    <Property Name="Longitude" Type="numeric" Scale="6" />
+    <Property Name="GroundHeight" Type="numeric" Precision="6" />
+    <Property Name="StationHeight" Type="numeric" Precision="6" />
+    <Property Name="Barometer" Type="numeric" Precision="5" />
+    <Property Name="TimeZone" Type="numeric" Precision="2" />
+    <Property Name="PrimarySite" Type="nvarchar" MaxLength="1" />
+    <Property Name="SiteHasData" Type="nvarchar" MaxLength="1" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'QCLCD.dbo.uvw_DailySummaryUniqueWbans' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="uvw_DailySummaryUniqueWbans">
+    <Key>
+      <PropertyRef Name="WbanId" />
+    </Key>
+    <Property Name="WbanId" Type="nvarchar" Nullable="false" MaxLength="10" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'QCLCD.dbo.uvw_DailySummaryWbansNotInStation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="uvw_DailySummaryWbansNotInStation">
+    <Key>
+      <PropertyRef Name="WbanId" />
+    </Key>
+    <Property Name="WbanId" Type="nvarchar" Nullable="false" MaxLength="10" />
+    <Property Name="Expr1" Type="nvarchar" MaxLength="10" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'QCLCD.dbo.uvw_StationUniqueWbans' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="uvw_StationUniqueWbans">
+    <Key>
+      <PropertyRef Name="WbanId" />
+    </Key>
+    <Property Name="WbanId" Type="nvarchar" Nullable="false" MaxLength="10" />
+  </EntityType>
+  <Association Name="FK_DailySummary_Station">
+    <End Role="Station" Type="QCLCDModel.Store.Station" Multiplicity="1" />
+    <End Role="DailySummary" Type="QCLCDModel.Store.DailySummary" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Station">
+        <PropertyRef Name="WbanId" />
+      </Principal>
+      <Dependent Role="DailySummary">
+        <PropertyRef Name="WbanId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="BuildDateReferenceTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="fn_diagramobjects" ReturnType="int" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="GetJSON" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="table_name" Type="varchar" Mode="In" />
+    <Parameter Name="department" Type="varchar" Mode="In" />
+    <Parameter Name="registries_per_request" Type="smallint" Mode="In" />
+  </Function>
+  <Function Name="JulyTemps" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="wBanIn" Type="nvarchar" Mode="In" />
+    <Parameter Name="beginDateIn" Type="date" Mode="In" />
+    <Parameter Name="endDateIn" Type="date" Mode="In" />
+  </Function>
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="usp_AvgWindSummary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="wBan" Type="nvarchar" Mode="In" />
+    <Parameter Name="beginMonth" Type="int" Mode="In" />
+    <Parameter Name="beginDay" Type="int" Mode="In" />
+    <Parameter Name="beginYear" Type="int" Mode="In" />
+    <Parameter Name="endMonth" Type="int" Mode="In" />
+    <Parameter Name="endDay" Type="int" Mode="In" />
+    <Parameter Name="endYear" Type="int" Mode="In" />
+  </Function>
+  <Function Name="usp_AvgWindSummaryJson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="wBan" Type="nvarchar" Mode="In" />
+    <Parameter Name="beginMonth" Type="int" Mode="In" />
+    <Parameter Name="beginDay" Type="int" Mode="In" />
+    <Parameter Name="beginYear" Type="int" Mode="In" />
+    <Parameter Name="endMonth" Type="int" Mode="In" />
+    <Parameter Name="endDay" Type="int" Mode="In" />
+    <Parameter Name="endYear" Type="int" Mode="In" />
+  </Function>
+  <Function Name="usp_DeleteDailySummaryRowsNoWban" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="usp_PrecipSummary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="wBan" Type="nvarchar" Mode="In" />
+    <Parameter Name="beginMonth" Type="int" Mode="In" />
+    <Parameter Name="beginDay" Type="int" Mode="In" />
+    <Parameter Name="beginYear" Type="int" Mode="In" />
+    <Parameter Name="endMonth" Type="int" Mode="In" />
+    <Parameter Name="endDay" Type="int" Mode="In" />
+    <Parameter Name="endYear" Type="int" Mode="In" />
+  </Function>
+  <Function Name="usp_StatesWithData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="usp_StationNamesWithData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="stationState" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="usp_TempSummary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="wBan" Type="nvarchar" Mode="In" />
+    <Parameter Name="beginMonth" Type="int" Mode="In" />
+    <Parameter Name="beginDay" Type="int" Mode="In" />
+    <Parameter Name="beginYear" Type="int" Mode="In" />
+    <Parameter Name="endMonth" Type="int" Mode="In" />
+    <Parameter Name="endDay" Type="int" Mode="In" />
+    <Parameter Name="endYear" Type="int" Mode="In" />
+  </Function>
+  <!--Errors Found During Generation:
+      warning 6013: The table/view 'QCLCD.dbo.ck_StationWBANDupes' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+      
+      <EntityType Name="ck_StationWBANDupes">
+        <Property Name="WBAN" Type="nvarchar" MaxLength="10" />
+        <Property Name="Expr1" Type="int" />
+      </EntityType>
+      Errors Found During Generation:
+      warning 6013: The table/view 'QCLCD.dbo.ck_StationWBANIsNull' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+      
+      <EntityType Name="ck_StationWBANIsNull">
+        <Property Name="WBAN" Type="nvarchar" MaxLength="10" />
+        <Property Name="WMO" Type="nvarchar" MaxLength="10" />
+        <Property Name="CallSign" Type="nvarchar" MaxLength="10" />
+        <Property Name="ClimateDivisionCode" Type="nvarchar" MaxLength="5" />
+        <Property Name="ClimateDivisionStateCode" Type="nvarchar" MaxLength="5" />
+        <Property Name="ClimateDivisionStationCode" Type="nvarchar" MaxLength="5" />
+        <Property Name="StationName" Type="nvarchar" MaxLength="60" />
+        <Property Name="StationState" Type="nvarchar" MaxLength="5" />
+        <Property Name="Location" Type="nvarchar" MaxLength="50" />
+        <Property Name="Latitude" Type="numeric" Scale="6" />
+        <Property Name="Longitude" Type="numeric" Scale="6" />
+        <Property Name="GroundHeight" Type="numeric" Precision="6" />
+        <Property Name="StationHeight" Type="numeric" Precision="6" />
+        <Property Name="Barometer" Type="numeric" Precision="5" />
+        <Property Name="TimeZone" Type="numeric" Precision="2" />
+      </EntityType>-->
+</Schema>

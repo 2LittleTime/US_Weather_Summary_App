@@ -1,0 +1,97 @@
+﻿@model TemplateFull.Models.WeatherSummaryFilter
+<script src="~/Scripts/RequestFormCharts/RequestFormCharts.js"></script>
+
+@using (Html.BeginForm())
+{
+    
+    <table class="table" border="1" cellspacing="0" style="width: 30%">
+         
+        <thead>
+            <tr>
+                <th colspan="2">
+                    Enter Search Criteria
+                </th>
+            </tr>
+         </thead>
+     
+        <tr class="table-row-1">
+            <td>
+                StateList:
+            </td>
+            <td>
+                @Html.DropDownList("StationState", Model.StationStates, "---Select State---", new { id = "stationState", onchange="getStationNames()" })
+            </td>
+        </tr>
+        <tr class="table-row-1">
+            <td>
+                Station Name:
+            </td>
+            <td>
+                @Html.DropDownList("StationName", Model.StationNames, "---Select Station---", new { id = "stationName" })
+            </td>
+        </tr>
+        <tr class="table-row-1">
+            <td>
+                Begin Month:
+            </td>
+            <td>
+                @Html.DropDownList("BeginMonth", Model.BeginMonthList, "---Select Start Month---", new { id = "beginMonth", onchange="getDay(this.id,'beginDay')" })
+            </td>
+        </tr>
+        <tr class="table-row-1">
+            <td>
+                Begin Day:
+            </td>
+            <td>
+                @Html.DropDownList("BeginDay", Model.BeginDayList, "---Select Start Day---", new { id = "beginDay" })
+            </td>
+        </tr>
+        <tr class="table-row-1">
+            <td>
+                Begin Year:
+            </td>
+            <td>
+                @Html.DropDownList("BeginYear", Model.BeginYearList, "---Select Start Year---")
+            </td>
+        </tr>
+         <tr class="table-row-1">
+            <td>
+                End Month:
+            </td>
+            <td>
+                @Html.DropDownList("EndMonth", Model.EndMonthList, "---Select End Month---", new { id = "endMonth", onchange="getDay(this.id,'endDay')" })
+            </td>
+        </tr>
+        <tr class="table-row-1">
+            <td>
+                End Day:
+            </td>
+            <td>
+                @Html.DropDownList("EndDay", Model.EndDayList, "---Select End Day---", new { id = "endDay" })
+            </td>
+        </tr>
+        <tr class="table-row-1">
+            <td>
+                End Year:
+            </td>
+            <td>
+                @Html.DropDownList("EndYear", Model.EndYearList, "---Select End Year---")
+            </td>
+        </tr>
+        @*
+        <tr class="table-row-2">
+            <td colspan="2">   
+        <input type="submit" value="Search" />
+            </td>
+        </tr>
+        *@
+    </table>
+@* --- div tags for API testing    
+<br />
+<div id ="sampleTable"></div>
+<br />
+<div id="sampleStream"></div>
+*@
+
+    
+}

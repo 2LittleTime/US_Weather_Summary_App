@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QCLCDModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="QclcdEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="DailySummaries" EntityType="QCLCDModel.DailySummary" />
+    <EntitySet Name="DateReferences" EntityType="QCLCDModel.DateReference" />
+    <EntitySet Name="Stations" EntityType="QCLCDModel.Station" />
+    <EntitySet Name="sysdiagrams" EntityType="QCLCDModel.sysdiagram" />
+    <EntitySet Name="uvw_DailySummaryUniqueWbans" EntityType="QCLCDModel.uvw_DailySummaryUniqueWbans" />
+    <EntitySet Name="uvw_DailySummaryWbansNotInStation" EntityType="QCLCDModel.uvw_DailySummaryWbansNotInStation" />
+    <EntitySet Name="uvw_StationUniqueWbans" EntityType="QCLCDModel.uvw_StationUniqueWbans" />
+    <AssociationSet Name="FK_DailySummary_Station" Association="QCLCDModel.FK_DailySummary_Station">
+      <End Role="Station" EntitySet="Stations" />
+      <End Role="DailySummary" EntitySet="DailySummaries" />
+    </AssociationSet>
+    <FunctionImport Name="BuildDateReferenceTable" />
+    <FunctionImport Name="GetJSON">
+      <Parameter Name="table_name" Mode="In" Type="String" />
+      <Parameter Name="department" Mode="In" Type="String" />
+      <Parameter Name="registries_per_request" Mode="In" Type="Int16" />
+    </FunctionImport>
+    <FunctionImport Name="JulyTemps">
+      <Parameter Name="wBanIn" Mode="In" Type="String" />
+      <Parameter Name="beginDateIn" Mode="In" Type="DateTime" />
+      <Parameter Name="endDateIn" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(QCLCDModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(QCLCDModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+    <FunctionImport Name="usp_AvgWindSummary" ReturnType="Collection(QCLCDModel.usp_AvgWindSummary_Result)">
+      <Parameter Name="wBan" Mode="In" Type="String" />
+      <Parameter Name="beginMonth" Mode="In" Type="Int32" />
+      <Parameter Name="beginDay" Mode="In" Type="Int32" />
+      <Parameter Name="beginYear" Mode="In" Type="Int32" />
+      <Parameter Name="endMonth" Mode="In" Type="Int32" />
+      <Parameter Name="endDay" Mode="In" Type="Int32" />
+      <Parameter Name="endYear" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="usp_AvgWindSummaryJson" ReturnType="Collection(QCLCDModel.usp_AvgWindSummaryJson_Result)">
+      <Parameter Name="wBan" Mode="In" Type="String" />
+      <Parameter Name="beginMonth" Mode="In" Type="Int32" />
+      <Parameter Name="beginDay" Mode="In" Type="Int32" />
+      <Parameter Name="beginYear" Mode="In" Type="Int32" />
+      <Parameter Name="endMonth" Mode="In" Type="Int32" />
+      <Parameter Name="endDay" Mode="In" Type="Int32" />
+      <Parameter Name="endYear" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="usp_DeleteDailySummaryRowsNoWban" />
+    <FunctionImport Name="usp_PrecipSummary" ReturnType="Collection(QCLCDModel.usp_PrecipSummary_Result)">
+      <Parameter Name="wBan" Mode="In" Type="String" />
+      <Parameter Name="beginMonth" Mode="In" Type="Int32" />
+      <Parameter Name="beginDay" Mode="In" Type="Int32" />
+      <Parameter Name="beginYear" Mode="In" Type="Int32" />
+      <Parameter Name="endMonth" Mode="In" Type="Int32" />
+      <Parameter Name="endDay" Mode="In" Type="Int32" />
+      <Parameter Name="endYear" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="usp_StatesWithData" ReturnType="Collection(String)" />
+    <FunctionImport Name="usp_StationNamesWithData" ReturnType="Collection(QCLCDModel.usp_StationNamesWithData_Result)">
+      <Parameter Name="stationState" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="usp_TempSummary" ReturnType="Collection(QCLCDModel.usp_TempSummary_Result)">
+      <Parameter Name="wBan" Mode="In" Type="String" />
+      <Parameter Name="beginMonth" Mode="In" Type="Int32" />
+      <Parameter Name="beginDay" Mode="In" Type="Int32" />
+      <Parameter Name="beginYear" Mode="In" Type="Int32" />
+      <Parameter Name="endMonth" Mode="In" Type="Int32" />
+      <Parameter Name="endDay" Mode="In" Type="Int32" />
+      <Parameter Name="endYear" Mode="In" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+  <EntityType Name="DailySummary">
+    <Key>
+      <PropertyRef Name="WbanId" />
+      <PropertyRef Name="YearMonthDayId" />
+    </Key>
+    <Property Name="WbanId" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="YearMonthDayId" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Year" Type="Int32" Nullable="false" />
+    <Property Name="Month" Type="Int32" Nullable="false" />
+    <Property Name="Day" Type="Int32" Nullable="false" />
+    <Property Name="TempMax" Type="Decimal" Precision="3" Scale="0" />
+    <Property Name="TempMin" Type="Decimal" Precision="3" Scale="0" />
+    <Property Name="TempAvg" Type="Decimal" Precision="3" Scale="0" />
+    <Property Name="Water1" Type="Decimal" Precision="3" Scale="0" />
+    <Property Name="SnowFall" Type="Decimal" Precision="6" Scale="3" />
+    <Property Name="PrecipTotal" Type="Decimal" Precision="6" Scale="3" />
+    <Property Name="WindAvgSpeed" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="WindMax5Speed" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="WindMax2Speed" Type="Decimal" Precision="5" Scale="2" />
+    <NavigationProperty Name="Station" Relationship="QCLCDModel.FK_DailySummary_Station" FromRole="DailySummary" ToRole="Station" />
+  </EntityType>
+  <EntityType Name="DateReference">
+    <Key>
+      <PropertyRef Name="DateId" />
+    </Key>
+    <Property Name="DateId" Type="Int32" Nullable="false" />
+    <Property Name="FullDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Year" Type="Int32" Nullable="false" />
+    <Property Name="Month" Type="Int32" Nullable="false" />
+    <Property Name="Day" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Station">
+    <Key>
+      <PropertyRef Name="WbanId" />
+    </Key>
+    <Property Name="WbanId" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="WMO" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="CallSign" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="ClimateDivisionCode" Type="String" MaxLength="5" Unicode="true" FixedLength="false" />
+    <Property Name="ClimateDivisionStateCode" Type="String" MaxLength="5" Unicode="true" FixedLength="false" />
+    <Property Name="ClimateDivisionStationCode" Type="String" MaxLength="5" Unicode="true" FixedLength="false" />
+    <Property Name="StationName" Type="String" MaxLength="60" Unicode="true" FixedLength="false" />
+    <Property Name="StationState" Type="String" MaxLength="5" Unicode="true" FixedLength="false" />
+    <Property Name="Location" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Latitude" Type="Decimal" Precision="18" Scale="6" />
+    <Property Name="Longitude" Type="Decimal" Precision="18" Scale="6" />
+    <Property Name="GroundHeight" Type="Decimal" Precision="6" Scale="0" />
+    <Property Name="StationHeight" Type="Decimal" Precision="6" Scale="0" />
+    <Property Name="Barometer" Type="Decimal" Precision="5" Scale="0" />
+    <Property Name="TimeZone" Type="Decimal" Precision="2" Scale="0" />
+    <Property Name="PrimarySite" Type="String" MaxLength="1" Unicode="true" FixedLength="false" />
+    <Property Name="SiteHasData" Type="String" MaxLength="1" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="DailySummaries" Relationship="QCLCDModel.FK_DailySummary_Station" FromRole="Station" ToRole="DailySummary" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="uvw_DailySummaryUniqueWbans">
+    <Key>
+      <PropertyRef Name="WbanId" />
+    </Key>
+    <Property Name="WbanId" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="uvw_DailySummaryWbansNotInStation">
+    <Key>
+      <PropertyRef Name="WbanId" />
+    </Key>
+    <Property Name="WbanId" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="Expr1" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="uvw_StationUniqueWbans">
+    <Key>
+      <PropertyRef Name="WbanId" />
+    </Key>
+    <Property Name="WbanId" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_DailySummary_Station">
+    <End Role="Station" Type="QCLCDModel.Station" Multiplicity="1" />
+    <End Role="DailySummary" Type="QCLCDModel.DailySummary" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Station">
+        <PropertyRef Name="WbanId" />
+      </Principal>
+      <Dependent Role="DailySummary">
+        <PropertyRef Name="WbanId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="usp_AvgWindSummary_Result">
+    <Property Type="Int32" Name="DateId" Nullable="true" />
+    <Property Type="Int32" Name="Month" Nullable="true" />
+    <Property Type="Int32" Name="Day" Nullable="true" />
+    <Property Type="Decimal" Name="WindAvg" Nullable="true" Precision="6" Scale="3" />
+  </ComplexType>
+  <ComplexType Name="usp_AvgWindSummaryJson_Result">
+    <Property Type="Int32" Name="DateId" Nullable="true" />
+    <Property Type="Int32" Name="Month" Nullable="true" />
+    <Property Type="Int32" Name="Day" Nullable="true" />
+    <Property Type="Decimal" Name="WindAvg" Nullable="true" Precision="6" Scale="3" />
+  </ComplexType>
+  <ComplexType Name="usp_PrecipSummary_Result">
+    <Property Type="Int32" Name="DateId" Nullable="true" />
+    <Property Type="Int32" Name="Month" Nullable="true" />
+    <Property Type="Int32" Name="Day" Nullable="true" />
+    <Property Type="Decimal" Name="PrecipAvg" Nullable="true" Precision="6" Scale="3" />
+  </ComplexType>
+  <ComplexType Name="usp_StationNamesWithData_Result">
+    <Property Type="String" Name="WbanId" Nullable="false" MaxLength="10" />
+    <Property Type="String" Name="StationName" Nullable="true" MaxLength="60" />
+    <Property Type="String" Name="Location" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="StationState" Nullable="true" MaxLength="5" />
+  </ComplexType>
+  <ComplexType Name="usp_TempSummary_Result">
+    <Property Type="Int32" Name="DateId" Nullable="true" />
+    <Property Type="Int32" Name="Month" Nullable="true" />
+    <Property Type="Int32" Name="Day" Nullable="true" />
+    <Property Type="Int32" Name="AvgTempMax" Nullable="true" />
+    <Property Type="Int32" Name="AvgTempAvg" Nullable="true" />
+    <Property Type="Int32" Name="AvgTempMin" Nullable="true" />
+  </ComplexType>
+</Schema>

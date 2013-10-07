@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="description" content="Description of your web page goes here." />
+        <meta name="keywords" content="Keywords for you web page go here. Each keyword or group of keyword phrases are separated by a comma. Keep this keyword list short and relevant to the content of this specific page and also relevant to the tile of the specific page." />
+        <link href="~/Content/Site_Grid.css" rel="stylesheet" />
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+    </head>
+
+<body>
+
+<div id="header-container">
+  <div id="header-name">
+      US Weather Summary
+  </div>
+  <div id="header-slogan">
+    A Quick Reference for US Weather History
+  </div>
+</div>
+<!-- 
+  
+  TOP NAV 
+  
+-->
+<div id="mainnav-container">
+  <div id="mainnav">
+    <ul style="font-size: 1.2em">
+      <li>@Html.ActionLink("Explore Weather Stations", "Index", "StationView")</li>
+      <li>@Html.ActionLink("Weather Summary Charts", "Index", "SummaryCharts")</li>
+      <li>@Html.ActionLink("Weather Summary Tables", "Index", "SummaryTables")</li>
+    </ul>
+  </div>
+  <div id="mainnav-side">
+      <ul style="font-size: 1.2em">
+      <li>@Html.ActionLink("Home", "Index", "Home")</li>
+      <li>@Html.ActionLink("About", "About", "Home")</li>
+      <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+    </ul>
+  </div>
+  <div id="posterphoto"></div>
+</div>
+<div class="clear"></div>
+<!-- 
+  
+  BREADCRUMB
+  
+-->
+<div id="breadcrumb-container">
+  <div id="breadcrumb-left">
+      @* --- Remove Breadcrump Text
+      <a href="#" title="Users will see this text when they roll over this link. Keep it short and consise. Use this text to clarify the purpose of the link.">Home</a> 
+      / <a href="#" title="Users will see this text when they roll over this link. Keep it short and consise. Use this text to clarify the purpose of the link.">Breadcrumb link</a> 
+      / Page Title
+      *@
+  </div>
+  <div id="breadcrumb-right">
+      @* --- Remove Right Breadcrumb Search Form
+    <form action="#" method="get" title="Sign up to our mailing list" dir="ltr" xml:lang="en">
+      <fieldset>
+      <legend>Search our site</legend>
+      <label for="search">search our site</label>
+      <input onfocus="this.select()" onblur="if (this.value==''){this.value='enter search phrase'}" id="search" name="search" type="text" class="searchbox" accesskey="4" value="enter search phrase" size="20" />
+      <label>search</label>
+      <input class="button-search" name="Search" type="button" value="Search" />
+      </fieldset>
+    </form>
+      *@
+  </div>
+</div>
+<div class="clear"></div>
+        
+ 
+ 
+<div id="content-container">
+
+    <div id="body">
+            @RenderSection("featured", required: false)
+            <section class="content-wrapper main-content clear-fix">
+                @RenderBody()
+            </section>
+        </div>
+
+  <div id="content-side">
+    <h2>US Weather Summary</h2>
+    <ul>
+        <li>Use this app to find weather history summaries for your locations of interest.</li>
+        <li>The data is available in both chart and table format.</li>
+        <li>You can learn more about the weather station locations as well.</li>
+    </ul>
+
+    <div class="separator-side-column"></div>
+   
+      <fieldset>
+        <legend>Internal Links</legend>
+        <ul style="font-size: 1.2em">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("About", "About", "Home")</li>
+            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+        </ul>
+
+      </fieldset>
+
+      <fieldset>
+        <legend>External Links</legend>
+        <ul class="link-list-vertical" style="font-size: 1.2em">
+            <li><a href="http://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/quality-controlled-local-climatological-data-qclcd" title="QCLCD">About the QCLCD Data</a></li>
+            <li><a href="http://www.asp.net/mvc" title=".NET MVC">About the tools</a></li>
+            <li><a href="http://www.blakemccabe.com" title="Author">About the Author</a></li>
+        </ul>
+     </fieldset>
+
+    <div class="separator-side-column"></div>
+  </div>
+</div>
+<div class="clear"></div>
+
+ <div id="footer-container">
+  <div id="footer-right">
+    <p>A .NET MVC Sample Application by Blake McCabe
+        <br />
+      Copyright &copy; @DateTime.Now.Year US Weather Summary - Blake McCabe
+    </p>
+      <p>
+      </p>
+  </div>
+</div>
+
+        @Scripts.Render("~/bundles/jquery")
+        @RenderSection("scripts", required: false)
+    </body>
+</html>

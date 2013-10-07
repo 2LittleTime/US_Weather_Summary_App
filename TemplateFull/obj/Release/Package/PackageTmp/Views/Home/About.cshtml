@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "About";
+}
+
+@* --- Remove the default hgroup
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+    <h2>@ViewBag.Message</h2>
+</hgroup>
+*@
+  
+@* --- Place all About content in right side content section - inherit styles from _Layout*@ 
+<div id="content"> <a name="maincontent" id="maincontent"></a>
+
+    <h1>A Study in Studying</h1>
+    <img src="~/Images/photo-small.jpg" width="150" height="100" alt="Study Time" title="Back to the woodshed." />
+    <p>This application represents an attempt to bring together, in one place, a demonstration of a subset of my core technical skills.</p>  
+    <p>Having recently accepted a separation package from my last company, I wanted to carve out some time to refresh some of my rusty technical skills, as well as take the opportunity to develop some new ones.  Having been a mostly (but certainly not exclusively) Microsoft guy for a while, I chose the .NET MVC framework as my primary area of focus.</p>
+    <p>Having not written a lot of web-oriented application development code in a while, the learning curve has been admittedly a bit steep.  However, in the process of // for(int i = 0; i == whateverItTakes; i++) {study(); research(); apply(); fail(); if (moderateSuccess == true) { break; }} // in bringing it all together, I have rediscovered a certain passion for the process again.</p>
+    <p>I asked some folks whose opinions I trust and respect for help along the way.  I'm probably misquoting, but the basic consensus was, "Go build something, then build something else."</p>
+    <p>This is my attempt to build something.  Perhaps, it might even evolve into something useful.</p>
+    <p>Feel free to use it.  I've made every attempt to keep the data and presentation in tune with the sources, as inconsistent and dirty as they are.  It should be right.</p>
+    
+    <br />
+
+    <h1>About the Data</h1>
+    <img src="~/Images/photo-small.jpg" width="150" height="100" alt="Weather Data" title="Weather Data" />
+    <ul class="list">
+        <li>This application represents a summary of the QCLCD (Quality Controlled Local Climatological Data) for the United States.  It is based on data from <a href="http://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/quality-controlled-local-climatological-data-qclcd">here</a></li>
+        <li>If you want to learn more about this information, the link above is a great place to start.</li>
+        <li>Please note that this version of the data only goes back to 2005, so the daily summaries I am presenting can only go back that far.</li>
+        <li>For purposes of consistency, I have left all February 29th days from leap years out of this version of the presentation.</li>
+        <li>I know a lot of you would like to see more detailed data, specific to sites and days.  For now I am keeping the app simple, for a few reasons.  Primary among these are the fact that the amounts of data are quite large (it's already several million rows and hundreds of megs), and it costs money to host this data in the cloud.  Secondly, I can't keep working on this forever; I need to get a job.</li>
+        <li>Temperatures are in degrees Fahrenheit.</li>
+        <li>Precipitation is in equivalent inches of water.  Different types of precipitation (rain, snow, sleet, hail, etc.) are not differentiated.</li>
+        <li>Wind Speeds are in MPH.</li>
+    </ul>
+
+    <br />
+
+    <h1>Techie Stuff</h1>
+    <img src="~/Images/photo-small.jpg" width="150" height="100" alt="Techie Stuff" title="Techie Stuff" />
+    <ul class="list">
+      <li>Due to the large number of source files and formats, some automation was required.</li>
+      <li>Download Accelerator was used to schedule and pull down the initial weather data zip archive folders.</li>
+      <li>Extracting the desired files from all the zip archives proved extremely tedious.  I built my own small .NET console app to automate the extraction of the files I needed.</li>
+      <li>Most all of the data manipulation work was done in SSIS (SQL Server Information Services).</li>
+      <li>Staging, testing, and production data are all housed in Microsoft SQL Server 2012.</li>
+      <li>Entity Framework provides the ORM layer between the data and the application.</li>
+      <li>The basic infrastructure of the application, including the Station and Summary Tables were built in Microsoft .NET MVC.</li>  
+      <li>The Summary Charts were built using the .NET MVC Web API tools.  The charts and request forms are powered by JSON objects sent from various APIs.</li>
+      <li>The Summary Charts are visualized using the free version of jChartFX.</li>
+      <li>The production application and data are hosted using Microsoft Azure cloud services.</li>
+      <li>All the source code above will be available in GitHub shortly.  Still a few things to clean up.</li>
+    </ul>
+    <p></p>
+
+    <h1>About the Author</h1>
+    <img src="~/Images/photo-small.jpg" width="150" height="100" alt="About Me" title="It's All About Me" />
+    <p>Blake McCabe lives and works in Austin, Texas, self-proclaimed capital of just about everything.</p>
+    <p>If you would like to contact me for any reason, you can do so <a href="http://www.blakemccabe.com">here</a>.</p>
+
+</div> 

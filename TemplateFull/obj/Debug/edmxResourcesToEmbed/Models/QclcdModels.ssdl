@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QclcdModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="QclcdModelStoreContainer">
+    <EntitySet Name="DailySummary" EntityType="QclcdModel.Store.DailySummary" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DateReference" EntityType="QclcdModel.Store.DateReference" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Station" EntityType="QclcdModel.Store.Station" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_DailySummary_Station" Association="QclcdModel.Store.FK_DailySummary_Station">
+      <End Role="Station" EntitySet="Station" />
+      <End Role="DailySummary" EntitySet="DailySummary" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="DailySummary">
+    <Key>
+      <PropertyRef Name="WbanId" />
+      <PropertyRef Name="YearMonthDayId" />
+    </Key>
+    <Property Name="WbanId" Type="nvarchar" Nullable="false" MaxLength="10" />
+    <Property Name="YearMonthDayId" Type="date" Nullable="false" />
+    <Property Name="Year" Type="int" Nullable="false" />
+    <Property Name="Month" Type="int" Nullable="false" />
+    <Property Name="Day" Type="int" Nullable="false" />
+    <Property Name="TempMax" Type="numeric" Precision="3" />
+    <Property Name="TempMin" Type="numeric" Precision="3" />
+    <Property Name="TempAvg" Type="numeric" Precision="3" />
+    <Property Name="Water1" Type="numeric" Precision="3" />
+    <Property Name="SnowFall" Type="numeric" Precision="6" Scale="3" />
+    <Property Name="PrecipTotal" Type="numeric" Precision="6" Scale="3" />
+    <Property Name="WindAvgSpeed" Type="numeric" Precision="5" Scale="2" />
+    <Property Name="WindMax5Speed" Type="numeric" Precision="5" Scale="2" />
+    <Property Name="WindMax2Speed" Type="numeric" Precision="5" Scale="2" />
+  </EntityType>
+  <EntityType Name="DateReference">
+    <Key>
+      <PropertyRef Name="DateId" />
+    </Key>
+    <Property Name="DateId" Type="int" Nullable="false" />
+    <Property Name="FullDate" Type="date" Nullable="false" />
+    <Property Name="Year" Type="int" Nullable="false" />
+    <Property Name="Month" Type="int" Nullable="false" />
+    <Property Name="Day" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Station">
+    <Key>
+      <PropertyRef Name="WbanId" />
+    </Key>
+    <Property Name="WbanId" Type="nvarchar" Nullable="false" MaxLength="10" />
+    <Property Name="WMO" Type="nvarchar" MaxLength="10" />
+    <Property Name="CallSign" Type="nvarchar" MaxLength="10" />
+    <Property Name="ClimateDivisionCode" Type="nvarchar" MaxLength="5" />
+    <Property Name="ClimateDivisionStateCode" Type="nvarchar" MaxLength="5" />
+    <Property Name="ClimateDivisionStationCode" Type="nvarchar" MaxLength="5" />
+    <Property Name="StationName" Type="nvarchar" MaxLength="60" />
+    <Property Name="StationState" Type="nvarchar" MaxLength="5" />
+    <Property Name="Location" Type="nvarchar" MaxLength="50" />
+    <Property Name="Latitude" Type="numeric" Scale="6" />
+    <Property Name="Longitude" Type="numeric" Scale="6" />
+    <Property Name="GroundHeight" Type="numeric" Precision="6" />
+    <Property Name="StationHeight" Type="numeric" Precision="6" />
+    <Property Name="Barometer" Type="numeric" Precision="5" />
+    <Property Name="TimeZone" Type="numeric" Precision="2" />
+    <Property Name="PrimarySite" Type="nvarchar" MaxLength="1" />
+    <Property Name="SiteHasData" Type="nvarchar" MaxLength="1" />
+  </EntityType>
+  <Association Name="FK_DailySummary_Station">
+    <End Role="Station" Type="QclcdModel.Store.Station" Multiplicity="1" />
+    <End Role="DailySummary" Type="QclcdModel.Store.DailySummary" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Station">
+        <PropertyRef Name="WbanId" />
+      </Principal>
+      <Dependent Role="DailySummary">
+        <PropertyRef Name="WbanId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="usp_AvgWindSummary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="wBan" Type="nvarchar" Mode="In" />
+    <Parameter Name="beginMonth" Type="int" Mode="In" />
+    <Parameter Name="beginDay" Type="int" Mode="In" />
+    <Parameter Name="beginYear" Type="int" Mode="In" />
+    <Parameter Name="endMonth" Type="int" Mode="In" />
+    <Parameter Name="endDay" Type="int" Mode="In" />
+    <Parameter Name="endYear" Type="int" Mode="In" />
+  </Function>
+  <Function Name="usp_PrecipSummary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="wBan" Type="nvarchar" Mode="In" />
+    <Parameter Name="beginMonth" Type="int" Mode="In" />
+    <Parameter Name="beginDay" Type="int" Mode="In" />
+    <Parameter Name="beginYear" Type="int" Mode="In" />
+    <Parameter Name="endMonth" Type="int" Mode="In" />
+    <Parameter Name="endDay" Type="int" Mode="In" />
+    <Parameter Name="endYear" Type="int" Mode="In" />
+  </Function>
+  <Function Name="usp_StatesWithData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="usp_StationNamesWithData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="stationState" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="usp_TempSummary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="wBan" Type="nvarchar" Mode="In" />
+    <Parameter Name="beginMonth" Type="int" Mode="In" />
+    <Parameter Name="beginDay" Type="int" Mode="In" />
+    <Parameter Name="beginYear" Type="int" Mode="In" />
+    <Parameter Name="endMonth" Type="int" Mode="In" />
+    <Parameter Name="endDay" Type="int" Mode="In" />
+    <Parameter Name="endYear" Type="int" Mode="In" />
+  </Function>
+</Schema>

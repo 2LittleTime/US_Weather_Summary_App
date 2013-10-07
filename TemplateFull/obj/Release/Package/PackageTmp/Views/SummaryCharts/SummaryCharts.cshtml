@@ -1,0 +1,77 @@
+﻿@using TemplateFull.Models;
+@using TemplateFull.Models.Interfaces;
+<link href="~/Content/jchartfx.css" rel="stylesheet" />
+<script type="text/javascript" src="~/Scripts/jchartfx.system.js"></script>
+<script type="text/javascript" src="~/Scripts/jchartfx.coreBasic.js"></script>
+<script type="text/javascript" src="~/Scripts/SummaryCharts/SummaryCharts.js"></script>
+
+@{
+    ViewBag.Title = "Weather Summary Charts";
+}
+
+<h2>Summary Charts</h2>
+
+<div id="content"> <a id="maincontent"></a>
+<div id="content-container">
+
+@{
+    IWeatherSummaryFilter wsf = new WeatherSummaryFilter();
+    Html.RenderPartial("RequestFormCharts", wsf);
+    }
+
+<button id="btnRequest" onclick="getData()">Create Charts</button>
+<br />
+
+
+
+<br />
+
+<table class="table" border="1" cellspacing="0" style="width: 30%">
+         <thead>
+            <tr>
+                <th colspan="2">
+                    Average Temperatures Chart
+                </th>
+            </tr>
+         </thead>
+</table>
+
+<div id="tempChart" style="width:900px;height:600px"></div>
+
+<br />
+
+<table class="table" border="1" cellspacing="0" style="width: 30%">
+         <thead>
+            <tr>
+                <th colspan="2">
+                    Average Precipitation Chart
+                </th>
+            </tr>
+         </thead>
+</table>
+
+<div id="precipChart" style="width:900px;height:600px"></div>
+
+<br />
+
+<table class="table" border="1" cellspacing="0" style="width: 30%">
+         <thead>
+            <tr>
+                <th colspan="2">
+                    Average Wind Chart
+                </th>
+            </tr>
+         </thead>
+</table>
+
+<div id="windChart" style="width:900px;height:600px"></div>
+
+<br />
+<div id ="sampleTable"></div>
+<br />
+<div id="sampleStream"></div>
+
+</div>
+</div>
+
+

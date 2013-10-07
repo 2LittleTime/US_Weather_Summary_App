@@ -1,0 +1,222 @@
+﻿@model TablesView
+@using TemplateFull.Models;
+@using TemplateFull.Models.ViewModels;
+@using TemplateFull.Models.Interfaces;
+
+
+@{
+    ViewBag.Title = "Summary Tables";
+}
+
+<h2>Summary Tables</h2>
+
+
+<div id="content"> <a id="maincontent"></a>
+
+<div id="content-container">
+
+@{
+    IWeatherSummaryFilter wsf = new WeatherSummaryFilter(ViewBag.BeginMonth, ViewBag.BeginDay, ViewBag.BeginYear, ViewBag.EndMonth, ViewBag.EndDay, ViewBag.EndYear, ViewBag.StationState, ViewBag.StationName);
+    Html.RenderPartial("RequestFormTables", wsf);
+    }
+
+<br />
+
+<table class="table" border="1" cellspacing="0" style="width: 30%">
+         <thead>
+            <tr>
+                <th colspan="2">
+                    Average Temperatures Table
+                </th>
+            </tr>
+         </thead>
+</table>
+
+<br />
+
+@if (Model.TempSummary.Count() != 0) {
+
+    <table class="table" border="1" cellspacing="0">
+    <thead>
+        
+        <tr>
+            <th>
+                Month
+            </th>
+            <th>
+                Day
+            </th>
+            <th>
+                Day of Year
+            </th>
+            <th>
+                Average High Temp
+            </th>
+            <th>
+                Average Average Temp
+            </th>
+            <th>
+                Average Low Temp
+            </th>
+        </tr>
+        
+    </thead>
+
+    
+@foreach (var item in Model.TempSummary.Select((value, i) => new {Data = value, Index = i})) {
+
+    <tr class="@(item.Index % 2 == 0 ? "table-row-1" : "table-row-2")">
+        <td>
+            @Html.DisplayFor(modelItem => item.Data.Month)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data.Day)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data.DateId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data.AvgTempMax)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data.AvgTempAvg)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data.AvgTempMin)
+        </td>
+    </tr>
+}
+</table>
+    
+<br />    
+}
+
+<table class="table" border="1" cellspacing="0" style="width: 30%">
+         <thead>
+            <tr>
+                <th colspan="2">
+                    Average Precipitation Table
+                </th>
+            </tr>
+         </thead>
+</table>
+
+<br />
+
+@if (Model.PrecipSummary.Count() != 0) {
+
+    <table class="table" border="1" cellspacing="0">
+    <thead>
+        
+        <tr>
+            <th>
+                Month
+            </th>
+            <th>
+                Day
+            </th>
+            <th>
+                Day of Year
+            </th>
+            <th>
+                Average Precipitation
+            </th>
+        </tr>
+        
+    </thead>
+
+    
+@foreach (var item in Model.PrecipSummary.Select((value, i) => new {Data = value, Index = i})) {
+
+    <tr class="@(item.Index % 2 == 0 ? "table-row-1" : "table-row-2")">
+        <td>
+            @Html.DisplayFor(modelItem => item.Data.Month)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data.Day)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data.DateId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data.PrecipAvg)
+        </td>
+    </tr>
+}
+</table>
+    
+<br />    
+}
+
+<table class="table" border="1" cellspacing="0" style="width: 30%">
+         <thead>
+            <tr>
+                <th colspan="2">
+                    Average Wind Table
+                </th>
+            </tr>
+         </thead>
+</table>
+
+<br />
+
+ 
+
+@if (Model.WindSummary.Count() != 0)
+{
+    
+    <table class="table" border="1" cellspacing="0">
+    <thead>
+        
+        <tr>
+            <th>
+                Month
+            </th>
+            <th>
+                Day
+            </th>
+            <th>
+                Day of Year
+            </th>
+            <th>
+                Average Wind Speed
+            </th>
+        </tr>
+        
+    </thead>
+
+@foreach (var item in Model.WindSummary.Select((value, i) => new { Data = value, Index = i }))
+{
+
+    <tr class="@(item.Index % 2 == 0 ? "table-row-1" : "table-row-2")">
+        <td>
+            @Html.DisplayFor(modelItem => item.Data.Month)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data.Day)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data.DateId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data.WindAvg)
+        </td>
+    </tr>
+}
+</table>
+    
+<br />    
+}
+
+
+
+<br />
+
+<div id ="sampleTable"></div>
+<br />
+<div id="sampleStream"></div>
+
+</div>
+</div>
+
+
