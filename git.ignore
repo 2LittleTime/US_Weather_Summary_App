@@ -80,6 +80,12 @@ ServiceDefinition.build.csdef
 
 #Ignore WebDeploy publish profile
 *.Publish.xml
+*.pubxml
+
+#Ignore Web Config Files
+Web.config
+Web.Debug.config
+Web.Release.config
 
 #Ignore email files delivered to specified pickup directory
 *.eml
